@@ -19,7 +19,6 @@ def responses(text, state, user_data, **args):
 
 	# ----------------------------------------------------------------------------
 	elif state == 4:
-		print(user_data[user_data["Head"]])
 		if text == "exit":
 			user_data["last_command"] = 3
 			head = user_data["Head"]
@@ -78,10 +77,47 @@ def responses(text, state, user_data, **args):
 			share = user_data["amount"]/len(user_data["Users"])
 			user_data[user_data["Head"]][text] += user_data["amount"]
 			for i in user_data["Users"]:
-				user_data[user_data["Head"]][i] -= share
+				user_data[user_data["Head"]][i] -= int(share)
 			user_data["amount"] = 0
 			user_data["Users"] = []
 			return "The transaction was added successfully."
+
+
+	# ----------------------------------------------------------------------------
+	elif state == 8:
+		if text == "exit":
+			user_data["last_command"] = 3
+			head = user_data["Head"]
+			return f"Back to event {head}"
+		else:
+			user_data["payer"] = text
+			user_data["last_command"] = 8.1
+			return "Enter the recipient's name:"
+
+
+	# ----------------------------------------------------------------------------
+	elif state == 8.1:
+		if text == "exit":
+			user_data["last_command"] = 3
+			head = user_data["Head"]
+			return f"Back to event {head}"
+		else:
+			user_data["recipi"] = text
+			user_data["last_command"] = 8.2
+			return "Enter the amount paid:"
+
+
+	# ----------------------------------------------------------------------------
+	elif state == 8.2:
+		if text == "exit":
+			user_data["last_command"] = 3
+			head = user_data["Head"]
+			return f"Back to event {head}"
+		else:
+			user_data["last_command"] = 8.3
+			user_data[user_data["Head"]][user_data["recipi"]] -= int(text)
+			user_data[user_data["Head"]][user_data["payer"]] += int(text)
+			return "The settlement was made."
 
 
 	# ----------------------------------------------------------------------------

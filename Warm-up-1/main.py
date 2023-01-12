@@ -49,8 +49,11 @@ def Add_transaction(update, context):
 	data = context.user_data
 	# should chan this
 	if data.get("Head"):
-		data["last_command"] = 5
-		update.message.reply_text("Please enter the name of the transaction:")
+		if len(data[data["Head"]]) != 0:
+			data["last_command"] = 5
+			update.message.reply_text("Please enter the name of the transaction:")
+		else:
+			update.message.reply_text("Please enter some member first.")
 	else:
 		update.message.reply_text("Please enter an event first.")
 # ----------------------------------------------------------------------
@@ -60,13 +63,16 @@ def show_state(update, context):
 	data = context.user_data
 	# should chan this
 	if data.get("Head"):
-		data["last_command"] = 6
-		users = list(data[data["Head"]].keys())
-		states = list(data[data["Head"]].values())
-		text = "status of accounts:"
-		for ind, i in enumerate(users):
-			text += f"{i} = {states[ind]}\n"
-		update.message.reply_text(text)
+		if len(data[data["Head"]]) != 0:
+			data["last_command"] = 6
+			users = list(data[data["Head"]].keys())
+			states = list(data[data["Head"]].values())
+			text = "status of accounts:\n"
+			for ind, i in enumerate(users):
+				text += f"{i} = {states[ind]}\n"
+			update.message.reply_text(text)
+		else:
+			update.message.reply_text("Please enter some member first.")
 	else:
 		update.message.reply_text("Please enter an event first.")
 # ----------------------------------------------------------------------
@@ -76,16 +82,33 @@ def send_state(update, context):
 	data = context.user_data
 	# should chan this
 	if data.get("Head"):
-		data["last_command"] = 7
-		users = list(data[data["Head"]].keys())
-		states = list(data[data["Head"]].values())
-		text = "status of accounts:"
-		for ind, i in enumerate(users):
-			text += f"{i} = {states[ind]}\n"
-		with open("status_accounts.txt", "a+") as f:
-			f.write(text)
-			update.message.reply_document(f, caption="status of accounts")
-		system("rm status_accounts.txt")
+		if len(data[data["Head"]]) != 0:
+			data["last_command"] = 7
+			users = list(data[data["Head"]].keys())
+			states = list(data[data["Head"]].values())
+			text = "status of accounts:\n"
+			for ind, i in enumerate(users):
+				text += f"{i} = {states[ind]}\n"
+			with open("status_accounts.txt", "a+") as f:
+				f.write(text)
+			update.message.reply_document(open("status_accounts.txt", "r+"), caption="status of accounts")
+			system("rm status_accounts.txt")
+		else:
+			update.message.reply_text("Please enter some member first.")			
+	else:
+		update.message.reply_text("Please enter an event first.")
+# ----------------------------------------------------------------------
+
+
+def Checkout(update, context):
+	data = context.user_data
+	# should chan this
+	if data.get("Head"):
+		if len(data[data["Head"]]) != 0:
+			data["last_command"] = 8
+			update.message.reply_text("Please enter the name of the payer:")
+		else:
+			update.message.reply_text("Please enter some member first.")			
 	else:
 		update.message.reply_text("Please enter an event first.")
 # ----------------------------------------------------------------------
@@ -117,6 +140,7 @@ def main():
 	dp.add_handler(CommandHandler("Add_transaction", Add_transaction))
 	dp.add_handler(CommandHandler("show_state", show_state))
 	dp.add_handler(CommandHandler("send_state", send_state))
+	dp.add_handler(CommandHandler("Checkout", Checkout))
 	# ------------
 	dp.add_handler(MessageHandler(Filters.text, message_handler))
 	dp.add_error_handler(error)
