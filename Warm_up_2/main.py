@@ -79,6 +79,7 @@ def all_event(update, context):
 	events.remove("temp")
 	events.remove("Where")
 	events.remove("State")
+	events.remove("KeyboardButton")
 	if len(events) > 0:
 		result = "📃 Events List:\n"
 		for i in events:
@@ -209,6 +210,7 @@ user_dict = {
 	Where : str             (__Home__, trip, ...)
 	State : int             (0, 1, ...)
 	temp  : list            (amount, names, ...)
+	KeyboardButton : KBL    ([KBL("add_member")], ...)
 	_Event_name_ : dict     ("ali" : 0, "ahmad" : 500)
 }
 """

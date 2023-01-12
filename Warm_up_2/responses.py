@@ -14,7 +14,7 @@ def process(text: str, user_dict: dict, state: int):
 	# =======================================================================
 
 	elif state == 3:
-		if text in user_dict and text not in ["temp", "State", "Where", "__Home__"]:
+		if text in user_dict and text not in ["temp", "State", "Where", "__Home__", "KeyboardButton"]:
 			user_dict["Where"] = text
 			user_dict["State"] = -1
 			user_dict["temp"] = []
