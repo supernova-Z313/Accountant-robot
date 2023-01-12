@@ -2,22 +2,28 @@ import Constant as keys
 import Resp as R
 from os import system
 from telegram.ext import *
-from telegram import KeyboardButton, ReplyKeyboardMarkup
-from telegram import InlineKeyboardButton as IKB, InlineKeyboardMarkup as IKM, CallbackQuery
+# from telegram import KeyboardButton, ReplyKeyboardMarkup
+# from telegram import InlineKeyboardButton as IKB, InlineKeyboardMarkup as IKM, CallbackQuery
 
 # ======================================================================
 def start_command(update, context):
 	data = context.user_data
 	data["last_command"] = 0
 	data["events"] = []
-	update.message.reply_text("Hello\n Welcome to my Bot\n")
+	update.message.reply_text("Hello\n Welcome to Accountant robot.\nTo start, you can use the following commands:"
+							  "\n/new_event - Create a new event.\n/go_to_event - Go to an event.")
 # ----------------------------------------------------------------------
 
 
 def help_command(update, context):
 	data = context.user_data
 	data["last_command"] = 1
-	update.message.reply_text("Whats happand my frind?!\nIf you have questions about the operation of the robot, you can read the description file.")
+	update.message.reply_text("Commands:\n"
+							  "\n/new_event - Create a new event.\n/go_to_event - Go to an event."
+							  "\n/add_member - Add a new member to the event.\n/add_transaction - Add a transaction."
+							  "\n/checkout - Checkout.\n/show_state - Display the status of accounts."
+							  "\n/send_state - Sending account status as a text file.\n"
+							  "\nIf you have more questions about the operation of the robot, you can read the description file.")
 # ----------------------------------------------------------------------
 
 
@@ -67,7 +73,8 @@ def show_state(update, context):
 			data["last_command"] = 6
 			users = list(data[data["Head"]].keys())
 			states = list(data[data["Head"]].values())
-			text = "status of accounts:\n"
+			head = data["Head"]
+			text = f"In event {head}\nstatus of accounts:\n"
 			for ind, i in enumerate(users):
 				text += f"{i} = {states[ind]}\n"
 			update.message.reply_text(text)
@@ -86,7 +93,8 @@ def send_state(update, context):
 			data["last_command"] = 7
 			users = list(data[data["Head"]].keys())
 			states = list(data[data["Head"]].values())
-			text = "status of accounts:\n"
+			head = data["Head"]
+			text = f"In event {head}\nstatus of accounts:\n"
 			for ind, i in enumerate(users):
 				text += f"{i} = {states[ind]}\n"
 			with open("status_accounts.txt", "a+") as f:
@@ -137,10 +145,10 @@ def main():
 	dp.add_handler(CommandHandler("new_event", new_event))
 	dp.add_handler(CommandHandler("go_to_event", go_to_event))
 	dp.add_handler(CommandHandler("add_member", add_member))
-	dp.add_handler(CommandHandler("Add_transaction", Add_transaction))
+	dp.add_handler(CommandHandler("add_transaction", Add_transaction))
 	dp.add_handler(CommandHandler("show_state", show_state))
 	dp.add_handler(CommandHandler("send_state", send_state))
-	dp.add_handler(CommandHandler("Checkout", Checkout))
+	dp.add_handler(CommandHandler("checkout", Checkout))
 	# ------------
 	dp.add_handler(MessageHandler(Filters.text, message_handler))
 	dp.add_error_handler(error)

@@ -13,7 +13,7 @@ def responses(text, state, user_data, **args):
 		if text in user_data:
 			user_data["last_command"] = 0
 			user_data["Head"] = text
-			return "You have successfully entered the event."
+			return f"You have successfully entered the {text} event.\nNow you can use this commands:\n/add_member  -- /add_transaction\n/checkout  -- /show_state\n/send_state"
 		else:
 			return "The entered name is not correct. Please try again:"
 
@@ -22,7 +22,7 @@ def responses(text, state, user_data, **args):
 		if text == "exit":
 			user_data["last_command"] = 3
 			head = user_data["Head"]
-			return f"Back to event {head}"
+			return f"Back to event {head}\nNow you can use this commands:\n/add_member  -- /add_transaction\n/checkout  -- /show_state\n/send_state"
 		elif text in user_data[user_data["Head"]]:
 			return "This name already exists.\nPlease enter another name or type \"exit\" to exit:"
 		else:
@@ -80,7 +80,8 @@ def responses(text, state, user_data, **args):
 				user_data[user_data["Head"]][i] -= int(share)
 			user_data["amount"] = 0
 			user_data["Users"] = []
-			return "The transaction was added successfully."
+			head = user_data["Head"]
+			return f"The transaction was added successfully.\nBack to event {head}\nUse command /show_state to view the status of the accounts."
 
 
 	# ----------------------------------------------------------------------------
@@ -117,9 +118,10 @@ def responses(text, state, user_data, **args):
 			user_data["last_command"] = 8.3
 			user_data[user_data["Head"]][user_data["recipi"]] -= int(text)
 			user_data[user_data["Head"]][user_data["payer"]] += int(text)
-			return "The settlement was made."
+			head = user_data["Head"]
+			return f"The settlement was made.\nBack to event {head}\nUse command /show_state to view the status of the accounts."
 
 
 	# ----------------------------------------------------------------------------
 	else:
-		return "We could not understand your message."
+		return "We could not understand your message.\nUse /help to get some help."
