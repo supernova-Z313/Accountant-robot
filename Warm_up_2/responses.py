@@ -45,7 +45,7 @@ def process(text: str, user_dict: dict, state: int):
 		user_dict["State"] = 6.2
 		user_dict["temp"].append(int(float(text)))
 		names = list(user_dict[user_dict["Where"]].keys())
-		result = "Enter the names of the participants in this transaction:\nWrite each name on one line.\nThe names of all the people in this event are:\n"
+		result = "Enter the names of the participants in this transaction:\n(Write each name on one line.)\n👥 The names of all the people in this event are:\n\n"
 		for i in names:
 			result += f"{i}\n"
 		return result

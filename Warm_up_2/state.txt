@@ -1,0 +1,5 @@
+Status of accounts in event dad:
+mmk = -25000.0
+llm = 50000
+oom = -25000.0
+ttm = 0
