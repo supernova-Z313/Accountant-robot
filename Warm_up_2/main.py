@@ -2,7 +2,6 @@ import Constant as keys
 import responses as R
 from telegram.ext import *
 from telegram import KeyboardButton, ReplyKeyboardMarkup
-from telegram import InlineKeyboardButton as IKB, InlineKeyboardMarkup as IKM, CallbackQuery
 from os import system
 
 # ---------------------------------------------------------------------------------------------
@@ -27,7 +26,12 @@ def help_u(update, context):
 	user_dict = context.user_data
 	user_dict["State"] = 1
 	user_dict["temp"] = []
-	update.message.reply_text("hello", quote=True)
+	update.message.reply_text("📑 Description of commands:\n🔰 add_event - Add a new event⛺️"
+							"\n🔰 go_to_event - Switch between events🎯\n🔰 all_event - Display the name of all events🗂"
+							"\n🔰 back_to_home - Exit the event and return to the initial page🏡\n🔰 add_member - Add member to event👥"
+							"\n🔰 transaction - Add a transaction💸\n🔰 share - Display the status of accounts📊"
+							"\n🔰 checkout - Checkout🖋\n🔰 data_file - Sending invoices📝"
+							"\n🔰 help - Will help youℹ️\n🔰 start - Starting bot🔆", quote=True)
 
 """/////////////////////////////////////////////////////////////////////////////////////////////"""
 
@@ -208,4 +212,4 @@ user_dict = {
 	_Event_name_ : dict     ("ali" : 0, "ahmad" : 500)
 }
 """
-""" ⛔️⭕✅🌀❌💳🤖📦🔰🆔❗️🛟💯⛺️🏕💸👥 🚀📃📋🏠👥"""
+""" ⛔️⭕✅🌀❌💳🤖📦🔰🆔❗️🛟💯⛺️🏕💸👥 🚀📃📋🏠👥📑🎯🗂🏡📊🖋📝ℹ️🔆"""
