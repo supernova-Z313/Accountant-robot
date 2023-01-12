@@ -167,7 +167,7 @@ def data_file(update, context):
 		with open("state.txt", "a+") as txt:
 			txt.write(result)
 		update.message.reply_document(open("state.txt", "r+"), caption=f"📋 Status of accounts in event {event_name}:\n", quote=True, reply_markup=kb_m)
-		system("rm state.txt")
+		system("del state.txt")
 	else:
 		update.message.reply_text("⛔️ Please enter the names of the participants first.\n"
 								  "⭕ Use this command to add member:\n🔰 /add_member", quote=True, reply_markup=kb_m)
