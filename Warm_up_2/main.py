@@ -14,7 +14,7 @@ def start(update, context):
 	user_dict["State"] = 0
 	user_dict["temp"] = []
 	kb = [[KeyboardButton("/add_member"), KeyboardButton("/share")], [KeyboardButton("/transaction")], 
-		  [KeyboardButton("/Checkout"), KeyboardButton("/data_file")], [KeyboardButton("/back_to_home")]]
+		  [KeyboardButton("/checkout"), KeyboardButton("/data_file")], [KeyboardButton("/back_to_home")]]
 	kb_m = ReplyKeyboardMarkup(kb, one_time_keyboard=True)
 	user_dict["KeyboardButton"] = kb_m
 	update.message.reply_text(f"🆔 Hello {user_name}.\n🤖 Welcome to Money Management Robot.💯\n"
@@ -139,7 +139,7 @@ def transaction(update, context):
 
 """/////////////////////////////////////////////////////////////////////////////////////////////"""
 
-def Checkout(update, context):
+def checkout(update, context):
 	user_dict = context.user_data
 	event_name = user_dict["Where"]
 	user_dict["temp"] = []
@@ -183,6 +183,11 @@ def main():
 	dp.add_handler(CommandHandler("go_to_event", go_to_event))
 	dp.add_handler(CommandHandler("all_event", all_event))
 	dp.add_handler(CommandHandler("back_to_home", back_to_home))
+	dp.add_handler(CommandHandler("add_member", add_member))
+	dp.add_handler(CommandHandler("transaction", transaction))
+	dp.add_handler(CommandHandler("share", share))
+	dp.add_handler(CommandHandler("checkout", checkout))
+	dp.add_handler(CommandHandler("data_file", data_file))
 	# remove this
 	dp.add_error_handler(error)
 	dp.add_handler(MessageHandler(Filters.text, messages))
