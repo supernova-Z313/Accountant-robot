@@ -7,7 +7,7 @@ def S(update, context):
 
 # help
 def H(update, context):
-	update.message.reply_text("🆘ma dastorat zir ra darim. az anha estefade kon.\n")
+	update.message.reply_text("🆘as dastorat zir be tartib estefade kon ta nahve karkard bot ro befahmi:\n🔹/start\n🔹/help\n🔹/Event🔹\n🔹/AM\n🔹/AT\n🔹/TH\n🔹/SS\n🔹/CK\n")
 
 # afzodan roydad
 def Event(update, context):
@@ -19,7 +19,7 @@ def AM(update, context):
 
 # afzodan trakonesh
 def AT(update, context):
-	update.message.reply_text("🎯baray afzodan tarakonesh yak payam be shekl zir ersal konid:📝\n\nanjamebde: (nam roydad) (nam tarakonesh) (mablagh trakonesh) (nam afrad mosharekat konande) (nam kharidar)")
+	update.message.reply_text("🎯baray afzodan tarakonesh yak payam be shekl zir ersal konid:📝\n\nanjambde: (nam roydad) (nam tarakonesh) (mablagh trakonesh) (nam afrad mosharekat konande) (nam kharidar)")
 
 # tasviye hesab
 def TH(update, context):
@@ -46,7 +46,16 @@ def messages(update, context):
 	text=str(update.message.text)
 	data=context.user_data
 	a = R.answers(text, data)
-	update.message.reply_text(a)
+	if a[0]=="0":
+		a=a[1:]
+		f = open("data.txt", "w")
+		f.truncate(0)
+		f.write(a)
+		f.close()
+		chat_id = update.message.chat_id
+		context.bot.send_document(chat_id, open("data.txt", "r"))
+	else:
+		update.message.reply_text(a)
 
 def main():
 	TELEGRAM_BOT_TOKEN = "5708690460:AAG7uUAWYQBhwx-eEM1iVttZDKrBnKRjsLY"
@@ -61,6 +70,8 @@ def main():
 	d.add_handler(CommandHandler("TH", TH))
 	d.add_handler(CommandHandler("SS", SS))
 	d.add_handler(CommandHandler("CK", CK))
+	d.add_handler(CommandHandler("RM", RM))
+	d.add_handler(CommandHandler("HT", HT))
 	d.add_handler(MessageHandler(Filters.text, messages))
 
 
