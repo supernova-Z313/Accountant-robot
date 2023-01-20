@@ -58,6 +58,8 @@ def messages(update, context):
 		update.message.reply_text(a)
 
 def main():
+	# addres of bot 
+	# https://t.me/robot_hesabdar_bot
 	TELEGRAM_BOT_TOKEN = "5708690460:AAG7uUAWYQBhwx-eEM1iVttZDKrBnKRjsLY"
 	u = Updater(TELEGRAM_BOT_TOKEN, use_context=True)
 	d = u.dispatcher
